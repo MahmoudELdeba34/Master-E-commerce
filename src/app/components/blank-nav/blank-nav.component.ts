@@ -1,0 +1,83 @@
+import { Component, HostListener, inject, OnInit } from '@angular/core';
+import { FlowbiteService } from '../../core/services/flowbite.service';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { AuthServiceService } from '../../core/services/auth/auth-service.service';
+import { cartItems, enverionment } from '../../core/environments/environment';
+import { NgIf } from '@angular/common';
+import { CartService } from '../../core/services/cart.service';
+
+@Component({
+  selector: 'app-blank-nav',
+  standalone: true,
+  imports: [RouterLink,RouterLinkActive,NgIf],
+  templateUrl: './blank-nav.component.html',
+  styleUrl: './blank-nav.component.scss'
+})
+export class BlankNavComponent implements OnInit {
+  private readonly _AuthServiceService = inject(AuthServiceService)
+  private readonly _FlowbiteService = inject(FlowbiteService);
+  private readonly _CartService = inject(CartService)
+  private readonly _Router= inject(Router)
+  cartItemscounter:number = 0 ;
+  isMenuOpen: boolean = true;
+  isMobile: boolean = window.innerWidth < 768;
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.isMobile = event.target.innerWidth < 768;
+    if (!this.isMobile) {
+      this.isMenuOpen = true;
+    }
+    else{
+      this.isMenuOpen = false;
+    }
+  }
+  ngOnInit(): void {
+    
+     this._CartService.numberCartItems.subscribe({
+      next:(res)=>{
+        this.cartItemscounter = res
+        console.log(res);
+      }
+    }) ;
+    
+    this._CartService.getCart().subscribe((res:any)=>{
+      console.log(res);
+      this.cartItemscounter = res.numOfCartItems;
+    });
+    if (!this.isMobile) {
+      this.isMenuOpen = true;
+    }
+    else{
+      this.isMenuOpen = false;
+    }
+      
+      this.cartItemscounter = cartItems;
+      console.log("hello from blank nav",cartItems,this.cartItemscounter);
+  }
+
+  ngAfterViewInit(): void {
+    //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
+    //Add 'implements AfterViewInit' to the class.
+    this._FlowbiteService.loadFlowbite(()=>{})
+  }
+
+  // ngAfterViewChecked(): void {
+  //   //Called after every check of the component's view. Applies to components only.
+  //   //Add 'implements AfterViewChecked' to the class.
+  //   this.cartItemscounter = cartItems;
+  //   console.log("hello from blank nav",cartItems,this.cartItemscounter);
+  // }
+
+
+  logout()
+  {
+    this._AuthServiceService.logout()
+  }
+
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
+  }
+
+ 
+}

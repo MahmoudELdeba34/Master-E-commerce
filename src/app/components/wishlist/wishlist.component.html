@@ -1,0 +1,13 @@
+<section class="my-16 md:p-10 container md:w-[80%] bg-gray-100">
+
+        <h2 class=" md:text-2xl md:py-5">
+            Wish List
+        </h2>
+
+        <div class="grid grid-cols-1 gap-5">
+            @for(pro of ProductData ; track pro.id){
+                <app-hcard (notifyParent)="display()" [productData]="pro" cardtype="wish"></app-hcard>
+            }
+        </div>
+
+</section>

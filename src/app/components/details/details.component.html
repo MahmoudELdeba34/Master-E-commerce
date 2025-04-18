@@ -1,0 +1,61 @@
+@if (detail) {
+<section class="overflow-x-hidden grid mt-5 py-5 px-4 grid-cols-1 md:grid-cols-2">
+    
+    <div data-aos="fade-right" class="vslider ">
+        <div class="w-[80%] md:w-1/2 mx-auto">
+             <swiper-container style="--swiper-navigation-color: var(--main-color); --swiper-pagination-color: #fff" class="mySwiper"
+    thumbs-swiper=".mySwiper2" space-between="10" navigation="true">
+    <swiper-slide>
+        <img [src]="hero" />
+      </swiper-slide>
+    @for (image of detail.images; track $index) {
+    <swiper-slide>
+      <img [src]="image" />
+    </swiper-slide>
+    }
+  </swiper-container>
+
+  <swiper-container class="mySwiper2" space-between="10" slides-per-view="4" free-mode="true"
+    watch-slides-progress="true">
+    <swiper-slide>
+        <img class="cursor-pointer" [src]="hero" />
+      </swiper-slide>
+    @for (image of detail.images; track $index) {
+    <swiper-slide>
+      <img class="cursor-pointer"  [src]="image" />
+    </swiper-slide>
+    }
+  </swiper-container>
+        </div>
+
+ 
+
+    </div>
+
+    <div data-aos="fade-left" class="productDetails px-4 flex flex-col justify-center items-center">
+        <p class="mb-4 self-start text-6xl tracking-tight text-gray-900 dark:text-white">{{detail.title}}</p>
+        <p class="mb-2 self-start text-2xl tracking-tight text-gray-700 dark:text-white">{{detail.description}}</p>
+        <span class="text-xl text-emerald-800 self-start">{{detail.category.name}}</span>
+<div class="w-full">
+        <div class="flex items-center mt-2.5 mb-5">
+            <span class="text-3xl me-auto font-bold text-gray-900 dark:text-white"><i class="fa-solid fa-sterling-sign"></i> {{detail.price}}</span>
+            <div [ngStyle]="{'background-image': getGradient(detail.ratingsAverage)}" class="flex items-center  bg-clip-text  rtl:space-x-reverse">
+                <i class="fa-solid fa-star text-transparent"></i>
+                <i class="fa-solid fa-star text-transparent"></i>
+                <i class="fa-solid fa-star text-transparent"></i>
+                <i class="fa-solid fa-star text-transparent"></i>
+                <i class="fa-solid fa-star text-transparent"></i>
+            </div>
+            <span class="bg-emerald-100 text-emerald-800 text-xs font-semibold px-2.5 py-0.5 rounded dark:bg-emerald-200 dark:text-emerald-800 ms-3">{{detail.ratingsAverage}}</span>
+        </div>
+        
+    </div>
+    <button (click)="add()"  class=" mt-2 mx-auto w-full text-2xl text-center btn-main hover:text-white">Add to cart</button>
+    </div>
+</section>
+}
+
+
+<section>
+    
+</section>

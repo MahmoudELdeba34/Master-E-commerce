@@ -1,0 +1,13 @@
+<section class="grid overflow-x-hidden w-[90%] gap-5 mx-auto grid-cols-2 md:grid-cols-4">
+    @for (cat of brands; track cat._id) {
+<div [attr.data-aos]="$index%4 < 2 ? 'fade-right':'fade-left'" class=" aspect-square bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+    <div>
+        <img class=" aspect-square w-full object-contain rounded-t-lg" [src]="cat.image" alt="" />
+    </div>
+    <div class="p-5">
+            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{cat.name}}</h5>
+    </div>
+</div>
+}
+
+</section>
